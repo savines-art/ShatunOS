@@ -2,7 +2,7 @@
 # Variables
 
 # Build tools
-NASM = nasm -f bin -dN=0x32000
+NASM = nasm -f bin -dN=0x78200
 
 
 # =============================================================================
@@ -10,8 +10,8 @@ NASM = nasm -f bin -dN=0x32000
 
 all: clean build test
 
-.tmp/boot.bin: src/hello_world.asm
-	$(NASM) src/hello_world.asm -o .tmp/boot.bin
+.tmp/boot.bin: src/bootloader.asm
+	$(NASM) src/bootloader.asm -o .tmp/boot.bin
 
 boot.img: .tmp/boot.bin
 	dd if=/dev/zero of=boot.img bs=512 count=2880
