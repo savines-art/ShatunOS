@@ -25,12 +25,11 @@ cnt: dd 0 ;counter of bytes
 load:
   int 0x13 ;reading of chs
   jc print_error ;error if carry
-  add bx, 512 ;adding 512 bytes
-  jnc .no_overflow ;checking if we crossed border of 64 Kb
+
   mov ax, es
-  add ax, 0x1000
+  add ax, 0x20 ;increasing [es:bx] by 512
   mov es, ax
-  .no_overflow:
+
   add dword[cnt], 512 ;increasing counter of read bytes
   cmp dword[cnt], N ;comparing with N and finishing if >=
   jae loop
