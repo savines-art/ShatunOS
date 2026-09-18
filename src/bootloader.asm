@@ -13,8 +13,6 @@ mov ss, ax
 mov sp, 0x7C00
 sti
 
-mov ah, 0x02 ;read sector from drive
-mov al, 0x1 ;number of sectors to read
 mov cl, 2 ;number of first sector
 mov ch, 0 ;number of first cilinder
 mov dh, 0 ;number of first head
@@ -23,6 +21,9 @@ mov bx, 0x0 ;setting [es : bx]
 cnt: dd 0 ;counter of bytes
 
 load:
+  mov ah, 0x02
+  mov al, 1
+
   int 0x13 ;reading of chs
   jc print_error ;error if carry
 
@@ -33,8 +34,6 @@ load:
   add dword[cnt], 512 ;increasing counter of read bytes
   cmp dword[cnt], N ;comparing with N and finishing if >=
   jae loop
-  mov ah, 0x02
-  mov al, 1
   inc cl ;changing coordinates
   cmp cl, 19
   jne .same_head
@@ -44,8 +43,6 @@ load:
     jne .same_cilinder
       inc ch
       mov dh, 0
-      cmp ch, 80
-      je loop
     .same_cilinder:
   .same_head:
   jmp load
