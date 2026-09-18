@@ -1,1 +1,1 @@
-# ShatunOS
+# ThanOS
